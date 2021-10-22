@@ -1,10 +1,19 @@
 ///! Rust implementation of the jump consistent hash [algorithm](https://arxiv.org/pdf/1406.2294.pdf) by John Lamping and Eric Veach.
+///
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{BuildHasher, BuildHasherDefault, Hash, Hasher};
 
 type BuildHasherJump = BuildHasherDefault<DefaultHasher>;
 
-/// Structure which create
+/// Examples
+/// ```rust
+/// use jump_consistent_hash::JumpConsistentHash;
+///
+/// let buckets = 5;
+/// let bucket_balancer = JumpConsistentHash::new(buckets);
+///
+/// assert!(matches!(bucket_balancer.get("test key"), 0..buckets))
+/// ```
 #[derive(Clone, Debug)]
 pub struct JumpConsistentHash<H = BuildHasherJump> {
     buckets: i32,
